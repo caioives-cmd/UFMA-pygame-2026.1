@@ -29,6 +29,11 @@ BULLETPURPLE_IMG = pygame.image.load(os.path.join("assets", "bullets", "bullet_p
 BULLETORANGE_IMG = pygame.image.load(os.path.join("assets", "bullets", "bullet_orange.png"))
 ROCKET_IMG       = pygame.image.load(os.path.join("assets", "bullets", "rocket.png"))
 
+# Som
+pygame.mixer.init()
+SOM_TIRO     = pygame.mixer.Sound(os.path.join("assets", "sounds", "gunshot.wav"))
+SOM_EXPLOSAO = pygame.mixer.Sound(os.path.join("assets", "sounds", "mini_exp.mp3"))
+
 # Cor e fonte
 fontecustom = pygame.font.SysFont("Imagine_Font", 30)
 BRANCO  = (255, 255, 255)
@@ -99,6 +104,7 @@ class Player:
             centro_x = self.x + self.get_img().get_width() // 2 - largura_img // 2
             self.projeteis.append(Projetil(centro_x, self.y, BULLETORANGE_IMG, -7))
             self.recarga = self.CADENCIA_TIRO # reseta o contador
+            SOM_TIRO.play()
 
     def balistica(self, inimigos):
         self.recarga = max(0, self.recarga - 1) # decrementa o numero da cadencia a cada frame
@@ -111,6 +117,7 @@ class Player:
                 if inimigo.totalmente_visivel():
                     if colisao(p, inimigo):
                         inimigo.vida -= 25
+                        SOM_EXPLOSAO.play()
                         if p in self.projeteis:
                             self.projeteis.remove(p)
                         if inimigo.vida <= 0:

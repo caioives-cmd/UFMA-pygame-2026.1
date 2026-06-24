@@ -82,7 +82,6 @@ class Player:
         self.projeteis = []
         self.recarga = 0  
         self.mask = pygame.mask.from_surface(PLAYER_IMG)
-
       
     def get_img(self):
         # Imagens de dano 
@@ -123,7 +122,6 @@ class Player:
                         if inimigo.vida <= 0:
                             inimigos.remove(inimigo)
 
-    
 # Inimigo
 class Inimigo:
     TiposImagens = {
